@@ -1,6 +1,6 @@
 package com.kce.service;
 
-import com.kce.dao.DBConnection;
+import com.kce.util.DBConnection;
 
 import java.sql.*;
 import java.util.Scanner;

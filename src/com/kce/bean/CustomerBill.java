@@ -1,8 +1,7 @@
 package com.kce.bean;
 
-import com.kce.dao.DBConnection;
+import com.kce.util.DBConnection;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
-import com.kce.dao.DBConnection;
+import com.kce.util.DBConnection;
 import com.kce.util.*;
 public class Customer {
     private Connection con;

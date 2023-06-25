@@ -1,4 +1,4 @@
-package com.kce.dao;
+package com.kce.util;
 import java.sql.*;
 public class DBConnection {
     public Connection con;

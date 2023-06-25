@@ -79,7 +79,6 @@ public class Main {
         try {
             DBConnection db = new DBConnection();
 
-
             Main M = new Main();
             if(db.con != null){
                 System.out.println("\nServer Connected\n");

@@ -60,7 +60,7 @@ public class Customer {
                         System.out.print("Food Quantity : ");
                         int quantity = sc.nextInt();
                         if (rs.getInt(4) <= quantity) {
-                            throw new QuantityExceededException();
+                            throw new QuantityExceededException("Minimum Stock available : " + rs.getInt(4));
                         } else {
                             int finalFoodid = foodid;
                             Optional<CustomerBill> obj = list.parallelStream().filter(c -> c.getFoodId() == finalFoodid).findFirst();
@@ -156,7 +156,7 @@ public class Customer {
                         obj.setCostOfGivenQuantity(obj.getPrice() * updateQuantity);
                         System.out.println("Cart updated successfully");
                     } else {
-                        throw new QuantityExceededException();
+                        throw new QuantityExceededException("Minimum Stock available : " + rs.getInt(4));
                     }
                 }
             }else {

@@ -1,10 +1,18 @@
 package com.kce.service;
+import com.kce.dao.DBConnection;
 import com.kce.util.*;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 class FoodItem {
     private int foodId;
     private String foodName;
     private int quantity;
     private double price;
+
+    public FoodItem() {
+    }
 
     public FoodItem(int foodId, String foodName, int quantity, double price) {
         this.foodId = foodId;
@@ -29,10 +37,17 @@ class FoodItem {
         return price;
     }
 
-    public void updateQuantity(int quantity) {
+    public void MinimumQuantityAvailable() {
         try{
-            if(quantity > this.quantity){
-                throw new QuantityExceededException("Available fooditem Quantity is exceeded");
+            DBConnection db = new DBConnection();
+            PreparedStatement pst = db.con.prepareStatement("select foodid , foodname, food_category,quantity from fooditem");
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()) {
+                if (10 > rs.getInt("quantity")) {
+                    throw new MinimumStockException("Available fooditem Quantity is exceeded for the\nfood : "
+                            +rs.getString("foodname")+"\nfood id : "+ rs.getInt("foodid")
+                            +"\nAvailable Quantity : "+rs.getInt("quantity"));
+                }
             }
         }catch(Exception e){
             System.out.println(e);

@@ -44,6 +44,8 @@ public class Main {
     public void owners(){
         Owner admin = new Owner();
         ownerOptions();
+        FoodItem fi = new FoodItem();
+        fi.MinimumQuantityAvailable();
         int i = sc.nextInt();
         while(true){
             switch(i){
@@ -77,7 +79,7 @@ public class Main {
         try {
             DBConnection db = new DBConnection();
 
-            Scanner sc = new Scanner(System.in);
+
             Main M = new Main();
             if(db.con != null){
                 System.out.println("\nServer Connected\n");

@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class CustomerBill {
+    private int tableNo;
     private int foodId;
     private String foodName;
     private String foodCategory;
@@ -30,13 +31,22 @@ public class CustomerBill {
     }
 
 
-    public CustomerBill(int foodId, String foodName, double price, int orderedQuantity,String foodCategory) {
+    public CustomerBill(int tableNo,int foodId, String foodName, double price, int orderedQuantity,String foodCategory) {
+        this.tableNo = tableNo;
         this.foodId = foodId;
         this.foodName = foodName;
         this.foodCategory = foodCategory;
         this.price = price;
         this.orderedQuantity = orderedQuantity;
         this.costOfGivenQuantity = orderedQuantity * price;
+    }
+
+    public int getTableNo() {
+        return tableNo;
+    }
+
+    public void setTableNo(int tableNo) {
+        this.tableNo = tableNo;
     }
 
     public void setFoodId(int foodId) {

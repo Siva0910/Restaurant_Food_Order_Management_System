@@ -16,8 +16,6 @@ import com.kce.util.*;
 public class Customer {
     private Connection con;
     private PreparedStatement pst;
-
-
     private Scanner sc = new Scanner(System.in);
     private List<CustomerBill> list = new ArrayList<>();
     public Customer() {
@@ -48,7 +46,13 @@ public class Customer {
     public void buyItem() {
         try {
             System.out.println("To terminate buying enter 100 as food Id");
-            System.out.print("Enter food Id to buy : ");
+            System.out.print("Enter table number : ");
+            int tableNo = sc.nextInt();
+            if(!(tableNo <= 10 && tableNo>=1) ){
+                throw new TableNumberNotFoundException("Table number not available. Please verify");
+            }
+
+            System.out.print("Enter food Id : ");
             int foodid = sc.nextInt();
 
             while (foodid != 100) {
@@ -70,7 +74,7 @@ public class Customer {
                                 obj.get().setOrderedQuantity(obj.get().getOrderedQuantity() + quantity);
                                 obj.get().setCostOfGivenQuantity(obj.get().getPrice() * obj.get().getOrderedQuantity());
                             } else {
-                                list.add(new CustomerBill(rs.getInt(1), rs.getString(2), rs.getDouble(5), quantity,rs.getString("food_category")));
+                                list.add(new CustomerBill(tableNo,rs.getInt(1), rs.getString(2), rs.getDouble(5), quantity,rs.getString("food_category")));
                             }
                             PreparedStatement ps2 = con.prepareStatement("update fooditem set quantity = ? where foodid = ?");
                             ps2.setInt(1, rs.getInt(4) - quantity);
@@ -97,7 +101,7 @@ public class Customer {
             double total = 0.0d;
 
             //total = list.stream().mapToDouble(x -> x.getCostOfGivenQuantity()).sum();
-            pst = con.prepareStatement("insert into orderhistory values(?,?,?,?,?,?,?,?)");
+            pst = con.prepareStatement("insert into orderhistory values(?,?,?,?,?,?,?,?,?)");
             pst.setString(2,l.getCustomerId());
             pst.setInt(1,cb.getOrderId());
             for (CustomerBill custb : list) {
@@ -109,6 +113,7 @@ public class Customer {
                 pst.setDouble(6,custb.getPrice());
                 pst.setInt(7,custb.getOrderedQuantity());
                 pst.setDouble(8,custb.getCostOfGivenQuantity());
+                pst.setInt(9,custb.getTableNo());
                 pst.executeUpdate();
 
                 total += custb.getCostOfGivenQuantity();
@@ -173,12 +178,12 @@ public class Customer {
             pst = con.prepareStatement("select * from orderhistory where customer_id = ? ");
             pst.setString(1, l.getCustomerId());
             ResultSet rs = pst.executeQuery();
-            System.out.format("%-12s%-12s%-20s%-12s%-12s%-12s\n", "Order Id", "Food Id", "Item Name", "Price", "Quantity", "Product Price");
+            System.out.format("%-12s%-12s%-12s%-20s%-12s%-12s%-12s\n", "Order Id","Table No", "Food Id", "Item Name", "Price", "Quantity", "Product Price");
             while (rs.next()) {
                 if (rs.getInt("food_id") != 0)
-                    System.out.format("%-12s%-12s%-20s%-12s%-12s%-12s\n", rs.getInt("order_id"), rs.getInt("food_id"), rs.getString("food_name"), rs.getDouble("price"), rs.getInt("ordered_quantity"), rs.getDouble("total_price"));
+                    System.out.format("%-12s%-12s%-12s%-20s%-12s%-12s%-12s\n", rs.getInt("order_id"),rs.getInt(9) ,rs.getInt("food_id"), rs.getString("food_name"), rs.getDouble("price"), rs.getInt("ordered_quantity"), rs.getDouble("total_price"));
                 else
-                    System.out.format("%64s : %6s\n\n", "Total", rs.getDouble("Total_price"));
+                    System.out.format("%76s : %6s\n\n", "Total", rs.getDouble("Total_price"));
             }
         }catch(Exception e){
             System.out.println(e);

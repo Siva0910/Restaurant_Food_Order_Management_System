@@ -119,7 +119,7 @@ public class Customer {
                 total += custb.getCostOfGivenQuantity();
             }
 
-            pst.setInt(3,0);
+            pst.setInt(3,1000);
             pst.setString(4,null);
             pst.setString(5,null);
             pst.setDouble(6,0);
@@ -180,7 +180,7 @@ public class Customer {
             ResultSet rs = pst.executeQuery();
             System.out.format("%-12s%-12s%-12s%-20s%-12s%-12s%-12s\n", "Order Id","Table No", "Food Id", "Item Name", "Price", "Quantity", "Product Price");
             while (rs.next()) {
-                if (rs.getInt("food_id") != 0)
+                if (rs.getInt("food_id") != 1000)
                     System.out.format("%-12s%-12s%-12s%-20s%-12s%-12s%-12s\n", rs.getInt("order_id"),rs.getInt(9) ,rs.getInt("food_id"), rs.getString("food_name"), rs.getDouble("price"), rs.getInt("ordered_quantity"), rs.getDouble("total_price"));
                 else
                     System.out.format("%76s : %6s\n\n", "Total", rs.getDouble("Total_price"));

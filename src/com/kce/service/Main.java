@@ -54,7 +54,9 @@ public class Main {
                 case 3: admin.updateQuantity();break;
                 case 4: admin.showAllFoodItem(); break;
                 case 5: admin.searchItem();break;
-                case 6: admin.displayOrderHistory();break;
+                case 6:
+                case 7:
+                    admin.displayOrderHistory(i);break;
                 default:
                     System.out.println("\t\tExited");
 
@@ -71,7 +73,8 @@ public class Main {
         System.out.println("Enter 4 : Display all items");
         System.out.println("Enter 5 : Search an item");
         System.out.println("Enter 6 : Display all the orders taken place");
-        System.out.println("Enter 7 : To Exit\n");
+        System.out.println("Enter 7 : Display the orders taken place,ordered by table number");
+        System.out.println("Enter 8 : To Exit\n");
     }
 
 

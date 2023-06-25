@@ -115,23 +115,28 @@ public class Owner {
             System.out.println(e);
         }
     }
-    public void displayOrderHistory() {
+    public void displayOrderHistory(int option) {
         try{
-            pst = con.prepareStatement("select * from orderhistory order by ORDER_ID");
+            if(option == 6){
+                pst = con.prepareStatement("SELECT * FROM orderhistory ");
+            }
+            else {
+                pst = con.prepareStatement("SELECT * FROM orderhistory ORDER BY TABLE_NO , order_id, food_id");
+            }
             ResultSet rs = pst.executeQuery();
             double totalOrdersCost=0;
-            System.out.format("%-12s%-12s%-12s%-12s%-18s%-15s%-12s%-12s%-12s\n","Order Id","Table No", "Customer Id", "FoodId Id", "Item Name", "Food Category", "Price", "Quantity", "Ordered Price");
+            System.out.format("%-12s%-12s%-12s%-12s%-18s%-15s%-12s%-12s%-12s\n","Table No","Order Id", "Customer Id", "FoodId Id", "Item Name", "Food Category", "Price", "Quantity", "Ordered Price");
             while (rs.next()) {
-                if (rs.getInt("food_id") != 0)
+                if (rs.getInt("food_id") != 1000)
                     System.out.format("%-12s%-12s%-12s%-12s%-18s%-15s%-12s%-12s%-12s\n",rs.getInt(9), rs.getInt(1), rs.getString(2), rs.getInt(3), rs.getString(4), rs.getString(5), rs.getDouble(6), rs.getInt(7), rs.getDouble(8));
                 else {
-                    System.out.format("%102s : %5s\n", "Total", rs.getDouble("Total_price"));
+                    System.out.format("%102s : %5s\n\n", "Total", rs.getDouble("Total_price"));
                     totalOrdersCost += rs.getDouble("Total_price");
                 }
             }
             System.out.format("\n%102s : %5s\n", "Total Cost of All Orders",totalOrdersCost);
         }catch (Exception e){
-            System.out.println(e);
+            e.printStackTrace();
         }
 
     }

@@ -44,16 +44,16 @@ class FoodItem {
             ResultSet rs = pst.executeQuery();
             while(rs.next()) {
                 if (10 > rs.getInt("quantity")) {
+
                     throw new MinimumStockException("Available fooditem Quantity is exceeded for the\nfood : "
                             +rs.getString("foodname")+"\nfood id : "+ rs.getInt("foodid")
                             +"\nAvailable Quantity : "+rs.getInt("quantity"));
                 }
             }
+
         }catch(Exception e){
             System.out.println(e);
         }
-        finally {
-            System.out.println("The available quantity is : "+getQuantity());
-        }
+
     }
 }

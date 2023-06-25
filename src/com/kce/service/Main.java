@@ -38,7 +38,7 @@ public class Main {
         System.out.println("Enter 2 : To print bill");
         System.out.println("Enter 3 : Update orders if any change in quantity");
         System.out.println("Enter 4 : Display your order history");
-        System.out.println("Enter 5 : To terminate all processes\n");
+        System.out.println("Enter 5 : To exit\n");
     }
 
     public void owners(){
@@ -70,8 +70,8 @@ public class Main {
         System.out.println("Enter 3 : Update quantity of an item");
         System.out.println("Enter 4 : Display all items");
         System.out.println("Enter 5 : Search an item");
-        System.out.println("Enter 6 : display all the orders taken place");
-        System.out.println("Enter 7 : exit\n");
+        System.out.println("Enter 6 : Display all the orders taken place");
+        System.out.println("Enter 7 : To Exit\n");
     }
 
 
